@@ -5,13 +5,19 @@
 // Generated on: 2016.09.11 at 12:23:47 PM GMT+03:00 
 //
 
+// devnote: ^{0,1}[0-9]{1}[-]{1}[0-9]{3}[-]{1}[0-9]{5}[-]{1}[0-9]{0,1}$ matches 1-111-11111-1
 
 package com.dmitrykolesnikovich.booksIndex.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
 
 
 /**
@@ -39,12 +45,25 @@ import javax.xml.bind.annotation.XmlType;
     "author",
     "title"
 })
-public class Book {
+@Entity(name = "books")
+@NamedQuery(name = "com.dmitrykolesnikovich.booksIndex.model.Book.list", query = "SELECT b from books b")
+public class Book implements Serializable {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @Pattern(regexp = "^{0,1}[0-9]{1}[-]{1}[0-9]{3}[-]{1}[0-9]{5}[-]{1}[0-9]{0,1}$")
   @XmlElement(required = true)
   protected String isbn;
+
+  @NotNull
+  @Size(min = 1, max = 80)
   @XmlElement(required = true)
   protected String author;
+
+  @NotNull
+  @Size(min = 1, max = 80)
   @XmlElement(required = true)
   protected String title;
 

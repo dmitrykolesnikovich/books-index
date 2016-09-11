@@ -5,6 +5,7 @@
     <jta-data-source>java:jboss/datasources/booksIndex</jta-data-source>
     <properties>
       <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
+      <property name="hibernate.id.new_generator_mappings" value="false"/>
     </properties>
   </persistence-unit>
 </persistence>

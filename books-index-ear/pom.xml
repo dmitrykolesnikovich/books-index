@@ -33,7 +33,37 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
+
+    <!--
+    In order to get your Maven standard resources/ folder filtered you need to have this config in your pom.xml:
+    http://www.liquibase.org/documentation/maven/index.html
+    -->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+
     <plugins>
+      <!--create database jdbc:mysql://localhost:3306/booksIndex-->
+      <plugin>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-maven-plugin</artifactId>
+        <version>3.0.5</version>
+        <configuration>
+          <propertyFile>${basedir}/src/main/resources/META-INF/liquibase.properties</propertyFile>
+          <changeLogFile>${basedir}/src/main/resources/META-INF/db.changelog.xml</changeLogFile>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>update</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <!--build ear-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
