@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://java.sun.com/xml/ns/javaee"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd"
+             version="6">
+  <module>
+    <web>
+      <web-uri>books-index-war.war</web-uri>
+      <context-root>/books-index</context-root>
+    </web>
+  </module>
+  <module>
+    <ejb>books-index-ejb.jar</ejb>
+  </module>
+  <data-source>
+    <name>java:jboss/datasources/booksIndex</name>
+    <class-name>org.mariadb.jdbc.MariaDbDataSource</class-name>
+    <url>jdbc:mysql://localhost:3306/booksIndex?createDatabaseIfNotExist=true</url>
+    <user>root</user>
+    <password>admin</password>
+  </data-source>
+</application>

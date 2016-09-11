@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.dmitrykolesnikovich</groupId>
+  <artifactId>books-index</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>books-index-ejb</module>
+    <module>books-index-war</module>
+    <module>books-index-ear</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <!-- Define the version of the EJB jar so that we don't need
+      to repeat ourselves in every module -->
+      <dependency>
+        <groupId>com.dmitrykolesnikovich</groupId>
+        <artifactId>books-index-ejb</artifactId>
+        <version>${project.version}</version>
+        <type>ejb</type>
+      </dependency>
+
+      <!-- Define the version of the WAR so that we don't need to repeat
+      ourselves in every module -->
+      <dependency>
+        <groupId>com.dmitrykolesnikovich</groupId>
+        <artifactId>books-index-war</artifactId>
+        <version>${project.version}</version>
+        <type>war</type>
+        <scope>compile</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- The WildFly plugin deploys your ear to a local JBoss
+        AS container -->
+        <!-- Due to Maven's lack of intelligence with EARs we need
+        to configure the wildfly maven plugin to skip deployment for all modules.
+        We then enable it specifically in the ear module. -->
+        <plugin>
+          <groupId>org.wildfly.plugins</groupId>
+          <artifactId>wildfly-maven-plugin</artifactId>
+          <version>${version.wildfly.maven.plugin}</version>
+          <inherited>true</inherited>
+          <configuration>
+            <skip>true</skip>
+            <hostname>${wildfly.host}</hostname>
+            <port>${wildfly.port}</port>
+            <username>${wildfly.username}</username>
+            <password>${wildfly.password}</password>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  <profiles>
+    <!-- this is the default profile and will in most cases be enough for local development -->
+    <!-- but in jenkins they'll be replaced -->
+    <profile>
+      <id>default-properties</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <wildfly.host>localhost</wildfly.host>
+        <wildfly.port>9990</wildfly.port>
+        <wildfly.username>admin</wildfly.username>
+        <wildfly.password>admin-123</wildfly.password>
+      </properties>
+    </profile>
+  </profiles>
+
+</project>
