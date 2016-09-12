@@ -12,6 +12,10 @@
 
   <artifactId>books-index-ear</artifactId>
   <packaging>ear</packaging>
+  <description>
+    This module defines data source and context root for WAR books-index-war.
+    Also it utilize liquibase maven plugin for generating database schema during build.
+  </description>
 
   <dependencies>
     <dependency>

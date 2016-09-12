@@ -40,29 +40,23 @@ public class BooksManager implements Serializable {
   }
 
   public List<Book> getBookList(String query) {
-    BookList bookList = client.target(BOOKS_INDEX_SERVICE_URI).path("list").queryParam("query", query).request(MediaType.APPLICATION_XML).get(BookList.class);
-    System.out.println("BooksManager.getBookList, bookList.size: " + bookList.getBook().size());
+    BookList bookList = client.target(BOOKS_INDEX_SERVICE_URI).path("list").
+        queryParam("query", query).request(MediaType.APPLICATION_XML).get(BookList.class);
     return bookList.getBook();
   }
 
   public String save(Book book) {
     Response response = null;
-    System.out.println("BooksManager.save: " + this);
     try {
-      System.out.println("book: " + book.toString());
       Entity<Book> entity = Entity.xml(book);
-      System.out.println("entity: " + entity);
-      response = client.target("http://localhost:8080/books-index/api").path("/book/save").request(MediaType.APPLICATION_XML).post(entity);
-      System.out.println("status: " + response.getStatus());
-      System.out.println(SUCCESS);
+      response = client.target(BOOKS_INDEX_SERVICE_URI).path("save").
+          request(MediaType.APPLICATION_XML).post(entity);
       if (response.getStatus() == Response.Status.OK.getStatusCode()) {
         return SUCCESS;
       } else {
         return FAIL;
       }
     } catch (ResponseProcessingException e) {
-      e.printStackTrace();
-      System.out.println(FAIL);
       return FAIL;
     } finally {
       if (response != null) {
