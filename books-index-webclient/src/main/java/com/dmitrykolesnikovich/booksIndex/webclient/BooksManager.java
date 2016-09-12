@@ -12,19 +12,17 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.ResponseProcessingException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.Serializable;
 import java.util.List;
 
 @Named
 @Stateless
-public class BooksManager implements Serializable {
+public class BooksManager {
 
+  public static final String BOOKS_INDEX_SERVICE_URI = "http://localhost:8080/books-index/api/book";
   private static final String SUCCESS = "success";
   private static final String FAIL = "fail";
 
-  private static final long serialVersionUID = 1;
   private Client client;
-  public static final String BOOKS_INDEX_SERVICE_URI = "http://localhost:8080/books-index/api/book";
 
   public BooksManager() {
     client = ClientBuilder.newClient();
