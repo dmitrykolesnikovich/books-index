@@ -1,3 +1,9 @@
+## Видео
+
+https://www.youtube.com/watch?v=YYSUcigB7IA
+
+## Условие задачи
+
 Тестовое задание. Книжная картотека
 
 Технологии: EJB, JPA, Transactions, Liquibase, JBoss, XML/JAXB
