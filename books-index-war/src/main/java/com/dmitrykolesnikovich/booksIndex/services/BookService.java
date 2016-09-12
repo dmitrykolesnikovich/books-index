@@ -31,8 +31,7 @@ public class BookService {
   }
 
   @POST
-  @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-  @Produces(MediaType.APPLICATION_XML)
+  @Consumes({MediaType.APPLICATION_XML})
   @Path("save")
   public Response save(Book book) {
     try {
