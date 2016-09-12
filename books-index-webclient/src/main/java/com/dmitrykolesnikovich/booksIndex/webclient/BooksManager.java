@@ -13,10 +13,13 @@ import javax.ws.rs.client.ResponseProcessingException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Named
 @Stateless
 public class BooksManager {
+
+  private static final Logger logger = Logger.getLogger(BooksManager.class.getName());
 
   public static final String BOOKS_INDEX_SERVICE_URI = "http://localhost:8080/books-index/api/book";
   private static final String SUCCESS = "success";
@@ -44,22 +47,18 @@ public class BooksManager {
   }
 
   public String save(Book book) {
-    Response response = null;
-    try {
-      Entity<Book> entity = Entity.xml(book);
-      response = client.target(BOOKS_INDEX_SERVICE_URI).path("save").
-          request(MediaType.APPLICATION_XML).post(entity);
+    Entity<Book> entity = Entity.xml(book);
+    try (Response response = client.target(BOOKS_INDEX_SERVICE_URI).path("save").request(MediaType.APPLICATION_XML).post(entity)) {
       if (response.getStatus() == Response.Status.OK.getStatusCode()) {
         return SUCCESS;
       } else {
+        String errorMessage = (String) response.getEntity();
+        logger.warning(errorMessage);
+
         return FAIL;
       }
     } catch (ResponseProcessingException e) {
       return FAIL;
-    } finally {
-      if (response != null) {
-        response.close();
-      }
     }
   }
 
