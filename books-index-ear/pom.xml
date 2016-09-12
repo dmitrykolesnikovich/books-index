@@ -16,11 +16,6 @@
   <dependencies>
     <dependency>
       <groupId>com.dmitrykolesnikovich</groupId>
-      <artifactId>books-index-ejb</artifactId>
-      <type>ejb</type>
-    </dependency>
-    <dependency>
-      <groupId>com.dmitrykolesnikovich</groupId>
       <artifactId>books-index-war</artifactId>
       <type>war</type>
     </dependency>

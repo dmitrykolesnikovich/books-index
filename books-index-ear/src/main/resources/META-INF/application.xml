@@ -9,9 +9,6 @@
       <context-root>/books-index</context-root>
     </web>
   </module>
-  <module>
-    <ejb>books-index-ejb.jar</ejb>
-  </module>
   <data-source>
     <name>java:jboss/datasources/booksIndex</name>
     <class-name>org.mariadb.jdbc.MariaDbDataSource</class-name>

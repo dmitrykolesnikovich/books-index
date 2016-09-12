@@ -10,8 +10,8 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>books-index-ejb</module>
     <module>books-index-war</module>
+    <module>books-index-webclient</module>
     <module>books-index-ear</module>
   </modules>
 
@@ -22,16 +22,16 @@
       to repeat ourselves in every module -->
       <dependency>
         <groupId>com.dmitrykolesnikovich</groupId>
-        <artifactId>books-index-ejb</artifactId>
+        <artifactId>books-index-war</artifactId>
         <version>${project.version}</version>
-        <type>ejb</type>
+        <type>war</type>
       </dependency>
 
       <!-- Define the version of the WAR so that we don't need to repeat
       ourselves in every module -->
       <dependency>
         <groupId>com.dmitrykolesnikovich</groupId>
-        <artifactId>books-index-war</artifactId>
+        <artifactId>books-index-ear</artifactId>
         <version>${project.version}</version>
         <type>war</type>
         <scope>compile</scope>

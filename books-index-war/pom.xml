@@ -6,17 +6,15 @@
 
   <groupId>com.dmitrykolesnikovich</groupId>
   <artifactId>books-index-war</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
 
   <dependencies>
-
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>5.0.8.Final</version>
     </dependency>
-
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
