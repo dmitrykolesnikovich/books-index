@@ -6,6 +6,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
     <h:link outcome="index" value="Home"/>
+
+    <br/>
+    <br/>
+
     <h:form>
         <h:panelGrid columns="2">
             <h:outputLabel for="isbn" value="ISBN:"/>
@@ -17,6 +21,9 @@
             <h:outputLabel for="title" value="Title:"/>
             <h:inputText value="#{book.title}" id="title"/>
         </h:panelGrid>
+
+        <br/>
+
         <h:commandButton action="#{booksManager.save(book)}" value="Save"/>
     </h:form>
 </f:view>

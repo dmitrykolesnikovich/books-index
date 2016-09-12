@@ -3,8 +3,10 @@ package com.dmitrykolesnikovich.booksIndex.webclient;
 import com.dmitrykolesnikovich.booksIndex.model.Book;
 import com.dmitrykolesnikovich.booksIndex.model.BookList;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -12,18 +14,21 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.ResponseProcessingException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 
 @Named
-@Stateless
-public class BooksManager {
+@Stateful
+@SessionScoped
+public class BooksManager implements Serializable {
 
   private static final Logger logger = Logger.getLogger(BooksManager.class.getName());
 
   public static final String BOOKS_INDEX_SERVICE_URI = "http://localhost:8080/books-index/api/book";
   private static final String SUCCESS = "success";
   private static final String FAIL = "fail";
+  private List<Book> books;
 
   private Client client;
 
@@ -31,19 +36,24 @@ public class BooksManager {
     client = ClientBuilder.newClient();
   }
 
+  @PostConstruct
+  public void onCreate() {
+    search(""); // init on start
+  }
+
   @PreDestroy
   public void onDestroy() {
     client.close();
   }
 
-  public List<Book> getBookList() {
-    return getBookList("");
-  }
-
-  public List<Book> getBookList(String query) {
+  public void search(String query) {
     BookList bookList = client.target(BOOKS_INDEX_SERVICE_URI).path("list").
         queryParam("query", query).request(MediaType.APPLICATION_XML).get(BookList.class);
-    return bookList.getBook();
+    books = bookList.getBook();
+  }
+
+  public List<Book> getBooks() {
+    return books;
   }
 
   public String save(Book book) {

@@ -6,26 +6,37 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
     <h:link outcome="index" value="Home"/>
+
     <br/>
-    <h:dataTable value="#{booksManager.getBookList()}" var="item">
-        <h:column>
-            <f:facet name="header">
-                <h:outputText value="ISBN"/>
-            </f:facet>
-            <h:outputText value="#{item.isbn}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <h:outputText value="Author"/>
-            </f:facet>
-            <h:outputText value="#{item.author}"/>
-        </h:column>
-        <h:column>
-            <f:facet name="header">
-                <h:outputText value="Title"/>
-            </f:facet>
-            <h:outputText value="#{item.title}"/>
-        </h:column>
-    </h:dataTable>
+    <br/>
+
+    <h:form>
+        <h:inputText value="#{search.query}"/>
+        <h:commandButton value="Search" action="#{booksManager.search(search.query)}"/>
+
+        <br/>
+        <br/>
+
+        <h:dataTable value="#{booksManager.getBooks()}" var="item">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="ISBN"/>
+                </f:facet>
+                <h:outputText value="#{item.isbn}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Author"/>
+                </f:facet>
+                <h:outputText value="#{item.author}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Title"/>
+                </f:facet>
+                <h:outputText value="#{item.title}"/>
+            </h:column>
+        </h:dataTable>
+    </h:form>
 </f:view>
 </html>
