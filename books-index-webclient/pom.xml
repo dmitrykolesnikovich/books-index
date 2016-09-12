@@ -4,7 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.dmitrykolesnikovich</groupId>
+  <parent>
+    <groupId>com.dmitrykolesnikovich</groupId>
+    <artifactId>books-index</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
   <artifactId>books-index-webclient</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
@@ -39,6 +44,7 @@
         <configuration>
           <!-- Java EE 7 doesn't require web.xml, Maven needs to catch up! -->
           <failOnMissingWebXml>false</failOnMissingWebXml>
+
         </configuration>
       </plugin>
     </plugins>

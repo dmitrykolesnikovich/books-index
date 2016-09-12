@@ -48,7 +48,9 @@ public class BooksManager {
 
   public String save(Book book) {
     Entity<Book> entity = Entity.xml(book);
-    try (Response response = client.target(BOOKS_INDEX_SERVICE_URI).path("save").request(MediaType.APPLICATION_XML).post(entity)) {
+    Response response = null;
+    try {
+      response = client.target(BOOKS_INDEX_SERVICE_URI).path("save").request(MediaType.APPLICATION_XML).post(entity);
       if (response.getStatus() == Response.Status.OK.getStatusCode()) {
         return SUCCESS;
       } else {
@@ -59,6 +61,10 @@ public class BooksManager {
       }
     } catch (ResponseProcessingException e) {
       return FAIL;
+    } finally {
+      if (response != null) {
+        response.close();
+      }
     }
   }
 

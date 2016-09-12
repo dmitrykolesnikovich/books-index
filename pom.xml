@@ -17,18 +17,12 @@
 
   <dependencyManagement>
     <dependencies>
-
-      <!-- Define the version of the EJB jar so that we don't need
-      to repeat ourselves in every module -->
       <dependency>
         <groupId>com.dmitrykolesnikovich</groupId>
         <artifactId>books-index-war</artifactId>
         <version>${project.version}</version>
         <type>war</type>
       </dependency>
-
-      <!-- Define the version of the WAR so that we don't need to repeat
-      ourselves in every module -->
       <dependency>
         <groupId>com.dmitrykolesnikovich</groupId>
         <artifactId>books-index-ear</artifactId>
@@ -42,42 +36,16 @@
   <build>
     <pluginManagement>
       <plugins>
-        <!-- The WildFly plugin deploys your ear to a local JBoss
-        AS container -->
-        <!-- Due to Maven's lack of intelligence with EARs we need
-        to configure the wildfly maven plugin to skip deployment for all modules.
-        We then enable it specifically in the ear module. -->
         <plugin>
-          <groupId>org.wildfly.plugins</groupId>
-          <artifactId>wildfly-maven-plugin</artifactId>
-          <version>${version.wildfly.maven.plugin}</version>
-          <inherited>true</inherited>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.5.1</version>
           <configuration>
-            <skip>true</skip>
-            <hostname>${wildfly.host}</hostname>
-            <port>${wildfly.port}</port>
-            <username>${wildfly.username}</username>
-            <password>${wildfly.password}</password>
+            <source>1.8</source>
+            <target>1.8</target>
           </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
   </build>
-  <profiles>
-    <!-- this is the default profile and will in most cases be enough for local development -->
-    <!-- but in jenkins they'll be replaced -->
-    <profile>
-      <id>default-properties</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <wildfly.host>localhost</wildfly.host>
-        <wildfly.port>9990</wildfly.port>
-        <wildfly.username>admin</wildfly.username>
-        <wildfly.password>admin-123</wildfly.password>
-      </properties>
-    </profile>
-  </profiles>
-
 </project>
